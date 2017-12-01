@@ -11,7 +11,7 @@
 
   <groupId>com.github.maven-nar</groupId>
   <artifactId>nar-maven-plugin</artifactId>
-  <version>3.5.3-SNAPSHOT</version>
+  <version>3.6.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>Native ARchive plugin for Maven</name>
@@ -99,8 +99,9 @@
     <url>https://github.com/maven-nar/nar-maven-plugin/issues</url>
   </issueManagement>
   <ciManagement>
-    <system>BuildHive</system>
-    <url>https://buildhive.cloudbees.com/job/maven-nar/job/nar-maven-plugin/</url>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/maven-nar/nar-maven-plugin</url>
+    <!-- See also: https://ci.appveyor.com/project/maven-nar/nar-maven-plugin -->
   </ciManagement>
   <distributionManagement>
     <snapshotRepository>
@@ -109,7 +110,7 @@
       <url>${sonatypeOssDistMgmtSnapshotsUrl}</url>
     </snapshotRepository>
     <repository>
-      <id>sonatype-nexus-staging</id>
+      <id>sonatype-nexus-releases</id>
       <name>Nexus Release Repository</name>
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
@@ -278,6 +279,11 @@
       <groupId>org.eclipse.aether</groupId>
       <artifactId>aether-util</artifactId>
       <version>0.9.0.M2</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>4.4.0</version>
     </dependency>
     <dependency>
       <groupId>net.java.dev.jna</groupId>
@@ -697,6 +703,22 @@
       <properties>
         <additionalparam>-Xdoclint:none</additionalparam>
       </properties>
+    </profile>
+    <!-- This profile enables deployment to the SciJava Maven repository. -->
+    <profile>
+      <id>deploy-to-imagej</id>
+      <distributionManagement>
+        <repository>
+          <id>imagej.releases</id>
+          <name>ImageJ Releases Repository</name>
+          <url>dav:http://maven.imagej.net/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+          <id>imagej.snapshots</id>
+          <name>ImageJ Snapshots Repository</name>
+          <url>dav:http://maven.imagej.net/content/repositories/snapshots</url>
+        </snapshotRepository>
+      </distributionManagement>
     </profile>
   </profiles>
 </project>
